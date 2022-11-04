@@ -18,6 +18,7 @@ start_date = '01/07/2022'
 end_date = '08/07/2022'
 
 
+
 class ApplicationNavigator(SiteNavigator):
     """
     Inherited from the SiteNavigator class, this class is designed specifically for parsing Planning Applications stored
@@ -47,14 +48,15 @@ class ApplicationNavigator(SiteNavigator):
         # Store the first page of results
         self.current_page = self.driver.current_url
         self.driver
-        self.search_results = self.driver.find_elements_by_class_name("searchresult")
+        self.search_results = self.driver.find_elements(By.CLASS_NAME, "searchresult")
         print(self.search_results)
 
 
     def add_results(self):
         """For every search result on a page, visit each link, then parse content to a database"""
         for i in self.search_results:
-            link = i.find_element_by_tag_name('a')
+            link = i.getAttribute("href")
+            print(link.text)
             link.click()
             # Get data here
             # Return to search result page
