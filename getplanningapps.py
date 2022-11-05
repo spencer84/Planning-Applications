@@ -47,17 +47,18 @@ class ApplicationNavigator(SiteNavigator):
 
         # Store the first page of results
         self.current_page = self.driver.current_url
-        self.driver
-        self.search_results = self.driver.find_elements(By.CLASS_NAME, "searchresult")
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, "searchresult")))
+        self.search_results = self.driver.find_elements_by_class_name("searchresult")
+        self.search_results = [element.get_attribute("href") for element in self.search_results]
         print(self.search_results)
 
 
     def add_results(self):
         """For every search result on a page, visit each link, then parse content to a database"""
         for i in self.search_results:
-            link = i.getAttribute("href")
-            print(link.text)
-            link.click()
+           # link = i.get_attribute('href')
+           # print(link)
+            i.click()
             # Get data here
             # Return to search result page
             self.driver.get(self.current_page)
@@ -79,4 +80,4 @@ if __name__ == "__main__":
     nav.site = site
     nav.open_page()
     nav.search()
-    nav.add_results()
+    #nav.add_results()
