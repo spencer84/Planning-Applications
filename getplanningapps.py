@@ -47,9 +47,8 @@ class ApplicationNavigator(SiteNavigator):
 
         # Store the first page of results
         self.current_page = self.driver.current_url
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.CLASS_NAME, "searchresult")))
-        self.search_results = self.driver.find_elements_by_class_name("searchresult")
-        self.search_results = [element.get_attribute("href") for element in self.search_results]
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@class=\'searchresult\']/a")))
+        self.search_results = [element.get_attribute("href") for element in self.driver.find_elements(By.XPATH, "//*[@class=\'searchresult\']/a")]
         print(self.search_results)
 
 
