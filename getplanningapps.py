@@ -1,5 +1,6 @@
 import time
 from SiteNavigator import SiteNavigator
+from PlanningApplication import PlanningApplication
 import selenium.common.exceptions
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -54,11 +55,17 @@ class ApplicationNavigator(SiteNavigator):
 
     def add_results(self):
         """For every search result on a page, visit each link, then parse content to a database"""
-        for i in self.search_results:
-           # link = i.get_attribute('href')
-           # print(link)
-            i.click()
+        for link in self.search_results:
+            self.driver.get(link)
+            app = PlanningApplication()
             # Get data here
+            #WebDriverWait(self.driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//*[@class=\'tr\']")))
+            elements = self.driver.find_elements(By.XPATH,"//*[@class=\'tr\']" )
+            for element in elements:
+                key = element.get_attribute("th").text
+                val = element.get_attribute("td").text
+                print(key, val)
+                print(element.text)
             # Return to search result page
             self.driver.get(self.current_page)
 
@@ -79,4 +86,4 @@ if __name__ == "__main__":
     nav.site = site
     nav.open_page()
     nav.search()
-    #nav.add_results()
+    nav.add_results()
