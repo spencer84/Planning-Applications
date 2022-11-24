@@ -68,8 +68,11 @@ class ApplicationNavigator(SiteNavigator):
             app.date_received = value_array[2]
             app.address = value_array[3]
             app.proposal = value_array[4]
-            app.appeal = value_array[5] 
-            app.appeal_status = value_array[6]
+            app.status = value_array[5]
+            app.decision = value_array[6]
+            app.decision_date = value_array[7]
+            app.appeal = value_array[8] 
+            app.appeal_status = value_array[9]
             app.printAttributes()
             # Return to search result page
             self.driver.get(self.current_page)

@@ -7,6 +7,8 @@ class PlanningApplication:
         self.address = None
         self.proposal = None
         self.status = None
+        self.decision = None
+        self.decision_date = None
         self.appeal = None
         self.appeal_status = None
     def printAttributes(self):
@@ -17,6 +19,8 @@ class PlanningApplication:
             Address: {self.address}
             Proposal: {self.proposal}
             Status: {self.status}
+            Decision: {self.decision}
+            Decision Date: {self.decision_date}
             Appeal: {self.appeal}
             Appeal Status: {self.appeal_status}
             """
