@@ -59,13 +59,18 @@ class ApplicationNavigator(SiteNavigator):
             self.driver.get(link)
             app = PlanningApplication()
             # Get data here
-            #WebDriverWait(self.driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//*[@class=\'tr\']")))
-            elements = self.driver.find_elements(By.XPATH,"//*[@class=\'tr\']" )
-            for element in elements:
-                key = element.get_attribute("th").text
-                val = element.get_attribute("td").text
-                print(key, val)
-                print(element.text)
+            values = self.driver.find_elements(By.TAG_NAME, "td" )
+            # Extract the text from the td elements (showing the descriptive values)
+            value_array = [value.text for value in values]
+            # Assign attributes to the planning application based on array position
+            app.reference = value_array[0]
+            app.alt_reference = value_array[1]
+            app.date_received = value_array[2]
+            app.address = value_array[3]
+            app.proposal = value_array[4]
+            app.appeal = value_array[5] 
+            app.appeal_status = value_array[6]
+            app.printAttributes()
             # Return to search result page
             self.driver.get(self.current_page)
 
