@@ -11,9 +11,12 @@ class PlanningApplication:
         self.decision_date = None
         self.appeal = None
         self.appeal_status = None
+        self.local_planning_authority = None
     def printAttributes(self):
         print(
-            f"""Reference Number: {self.reference} 
+            f"""
+            Local Planning Authority: {self.local_planning_authority}
+            Reference Number: {self.reference} 
             Alternative Ref Number: {self.alt_reference}
             Date Received: {self.date_received}
             Address: {self.address}
@@ -25,5 +28,7 @@ class PlanningApplication:
             Appeal Status: {self.appeal_status}
             """
         )
-    #     self.db =
-    # def sendToDatabase(self):
+    def sendToDatabase(self, connection):
+        """Either update or insert new record"""
+        cur = connection.cursor()
+        cur.execute("insert")

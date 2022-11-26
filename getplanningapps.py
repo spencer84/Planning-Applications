@@ -1,4 +1,3 @@
-import time
 from SiteNavigator import SiteNavigator
 from PlanningApplication import PlanningApplication
 import selenium.common.exceptions
@@ -17,6 +16,7 @@ site = 'https://pa.cheshirewestandchester.gov.uk/online-applications/search.do?a
 # Eventually have these reflect the most recent record to the current date.
 start_date = '01/07/2022'
 end_date = '08/07/2022'
+local_planning_authority = "Cheshire West and Chester"
 
 
 
@@ -58,6 +58,7 @@ class ApplicationNavigator(SiteNavigator):
         for link in self.search_results:
             self.driver.get(link)
             app = PlanningApplication()
+            app.local_planning_authority = local_planning_authority
             # Get data here
             values = self.driver.find_elements(By.TAG_NAME, "td" )
             # Extract the text from the td elements (showing the descriptive values)
@@ -95,3 +96,4 @@ if __name__ == "__main__":
     nav.open_page()
     nav.search()
     nav.add_results()
+    
