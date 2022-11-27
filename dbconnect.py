@@ -3,7 +3,8 @@ import mariadb
 
 class dbconnect:
     def __init__(self):
-        self.connection = self.connect()
+        self.connection = None
+        self.connect()
         # Establish the database connection
         self.cursor = self.connection.cursor()
 

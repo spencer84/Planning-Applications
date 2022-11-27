@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
+from dbconnect import dbconnect
 
 # Open a Chrome browser and navigate to the council planning page
 # site = 'https://www.cheshirewestandchester.gov.uk/residents/planning-and-building-control/' \
@@ -18,7 +19,9 @@ start_date = '01/07/2022'
 end_date = '08/07/2022'
 local_planning_authority = "Cheshire West and Chester"
 
-
+# Connect to database
+db = dbconnect()
+db.connect()
 
 class ApplicationNavigator(SiteNavigator):
     """
@@ -75,6 +78,8 @@ class ApplicationNavigator(SiteNavigator):
             app.appeal = value_array[8] 
             app.appeal_status = value_array[9]
             app.printAttributes()
+            # Send planning application to database
+            app.sendToDatabase(db.connection)
             # Return to search result page
             self.driver.get(self.current_page)
 

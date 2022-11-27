@@ -1,3 +1,4 @@
+import time
 
 class PlanningApplication:
     def __init__(self):
@@ -12,11 +13,12 @@ class PlanningApplication:
         self.appeal = None
         self.appeal_status = None
         self.local_planning_authority = None
+        self.date_collected = time.time
     def printAttributes(self):
         print(
             f"""
-            Local Planning Authority: {self.local_planning_authority}
             Reference Number: {self.reference} 
+            Local Planning Authority: {self.local_planning_authority}
             Alternative Ref Number: {self.alt_reference}
             Date Received: {self.date_received}
             Address: {self.address}
@@ -31,4 +33,8 @@ class PlanningApplication:
     def sendToDatabase(self, connection):
         """Either update or insert new record"""
         cur = connection.cursor()
-        cur.execute("insert")
+        cur.execute(f"""insert into applications ({self.reference}, {self.local_planning_authority},{self.alt_reference},
+        {self.date_received},{self.address},{self.proposal},{self.status},{self.decision},{self.decision_date},{self.appeal},
+        {self.appeal_status})""")
+        print("Successfully inserted row")
+        connection.commit()
