@@ -33,8 +33,9 @@ class PlanningApplication:
     def sendToDatabase(self, connection):
         """Either update or insert new record"""
         cur = connection.cursor()
-        cur.execute(f"""insert into applications ({self.reference}, {self.local_planning_authority},{self.alt_reference},
-        {self.date_received},{self.address},{self.proposal},{self.status},{self.decision},{self.decision_date},{self.appeal},
-        {self.appeal_status})""")
+        cur.execute(f"""INSERT INTO applications (ReferenceNumber, LocalPlanningAuthority, AlternativeReferenceNumber, DateReceived,
+        Address, Proposal, Status, Decision, DecisionDate, Appeal, AppealStatus) values ('{self.reference}', '{self.local_planning_authority}','{self.alt_reference}',
+        '{self.date_received}','{self.address}','{self.proposal}','{self.status}','{self.decision}','{self.decision_date}','{self.appeal}',
+        '{self.appeal_status}')""")
         print("Successfully inserted row")
         connection.commit()
