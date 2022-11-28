@@ -42,6 +42,7 @@ class ApplicationNavigator(SiteNavigator):
         Search by a given date range
         :return:
         """
+        self.end_reached = False
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
             (By.XPATH, "//*[@id=\"applicationDecisionStart\"]"))).send_keys(start_date)
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
@@ -84,7 +85,13 @@ class ApplicationNavigator(SiteNavigator):
             # Return to search result page
             self.driver.get(self.current_page)
 
-    # def next_page(self):
+    def next_page(self):
+        next_page = self.driver.find_element(By.CLASS_NAME, "next")
+        if next_page == None:
+            self.end_reached = True
+        else:
+            self.current_page = next_page
+
     #
     #
     #
@@ -101,5 +108,7 @@ if __name__ == "__main__":
     nav.site = site
     nav.open_page()
     nav.search()
-    nav.add_results()
+    while not nav.end_reached:
+        nav.add_results()
+        nav.next_page()
     

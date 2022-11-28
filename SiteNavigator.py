@@ -9,6 +9,7 @@ class SiteNavigator:
         self.driver = None
         self.current_page = None
         self.search_results = []
+        self.end_reached = False
 
     def open_page(self):
         """
