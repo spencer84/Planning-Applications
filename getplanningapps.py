@@ -79,6 +79,7 @@ class ApplicationNavigator(SiteNavigator):
             app.decision_date = datetime.strptime(value_array[7], "%a %d %b %Y").strftime("%Y-%m-%d")
             app.appeal = value_array[8] 
             app.appeal_status = value_array[9]
+            app.date_collected = datetime.now.strftime("%Y-%m-%d")
             app.printAttributes()
             # Send planning application to database
             app.sendToDatabase(db.connection)
