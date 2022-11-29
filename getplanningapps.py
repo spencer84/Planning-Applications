@@ -53,13 +53,14 @@ class ApplicationNavigator(SiteNavigator):
 
         # Store the first page of results
         self.current_page = self.driver.current_url
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@class=\'searchresult\']/a")))
-        self.search_results = [element.get_attribute("href") for element in self.driver.find_elements(By.XPATH, "//*[@class=\'searchresult\']/a")]
-        print(self.search_results)
+        
 
 
     def add_results(self):
         """For every search result on a page, visit each link, then parse content to a database"""
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@class=\'searchresult\']/a")))
+        self.search_results = [element.get_attribute("href") for element in self.driver.find_elements(By.XPATH, "//*[@class=\'searchresult\']/a")]
+        print(self.search_results)
         for link in self.search_results:
             self.driver.get(link)
             app = PlanningApplication()
@@ -69,6 +70,8 @@ class ApplicationNavigator(SiteNavigator):
             # Extract the text from the td elements (showing the descriptive values)
             value_array = [value.text for value in values]
             # Assign attributes to the planning application based on array position
+            if len(value_array) == 0:
+                continue
             app.reference = value_array[0]
             app.alt_reference = value_array[1]
             app.date_received = datetime.strptime(value_array[2], "%a %d %b %Y").strftime("%Y-%m-%d")
@@ -79,7 +82,7 @@ class ApplicationNavigator(SiteNavigator):
             app.decision_date = datetime.strptime(value_array[7], "%a %d %b %Y").strftime("%Y-%m-%d")
             app.appeal = value_array[8] 
             app.appeal_status = value_array[9]
-            app.date_collected = datetime.now.strftime("%Y-%m-%d")
+            app.date_collected = datetime.now().strftime("%Y-%m-%d")
             app.printAttributes()
             # Send planning application to database
             app.sendToDatabase(db.connection)
@@ -87,11 +90,14 @@ class ApplicationNavigator(SiteNavigator):
             self.driver.get(self.current_page)
 
     def next_page(self):
-        next_page = self.driver.find_element(By.CLASS_NAME, "next")
-        if next_page == None:
-            self.end_reached = True
-        else:
+        try:
+            next_page = self.driver.find_element(By.CLASS_NAME, "next").get_attribute('href')
             self.current_page = next_page
+            self.driver.get(self.current_page)
+        except selenium.common.exceptions.NoSuchElementException:
+
+            self.end_reached = True
+            
 
     #
     #
