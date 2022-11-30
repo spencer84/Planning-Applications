@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 from dbconnect import dbconnect
 from datetime import datetime
+import time
 
 # Open a Chrome browser and navigate to the council planning page
 # site = 'https://www.cheshirewestandchester.gov.uk/residents/planning-and-building-control/' \
@@ -70,8 +71,6 @@ class ApplicationNavigator(SiteNavigator):
             # Extract the text from the td elements (showing the descriptive values)
             value_array = [value.text for value in values]
             # Assign attributes to the planning application based on array position
-            if len(value_array) == 0:
-                continue
             app.reference = value_array[0]
             app.alt_reference = value_array[1]
             app.date_received = datetime.strptime(value_array[2], "%a %d %b %Y").strftime("%Y-%m-%d")
@@ -118,4 +117,6 @@ if __name__ == "__main__":
     while not nav.end_reached:
         nav.add_results()
         nav.next_page()
+        # Avoid 'Too Many Requests' error by waiting
+        time.sleep(60)
     
