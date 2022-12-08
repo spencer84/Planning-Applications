@@ -98,17 +98,6 @@ class ApplicationNavigator(SiteNavigator):
             self.end_reached = True
             
 
-    #
-    #
-    #
-    #
-    # def find_apps(self):
-    #     """
-    #
-    #     :return:
-    #     """
-
-
 if __name__ == "__main__":
     nav = ApplicationNavigator()
     nav.site = site
@@ -119,4 +108,6 @@ if __name__ == "__main__":
         nav.next_page()
         # Avoid 'Too Many Requests' error by waiting
         time.sleep(60)
+    db.connection.close()
+
     

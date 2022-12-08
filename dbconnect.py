@@ -20,9 +20,5 @@ class dbconnect:
         """Import the details of a planning application into the MySQL database"""
         self.cursor.execute()
 
-if __name__ == "__main__":
-    print("testing...")
-    conn = mariadb.connect(user = username, password = password, database = "planning")
-    cur = conn.cursor()
     
     
