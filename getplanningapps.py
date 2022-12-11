@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
 from dbconnect import dbconnect
-from datetime import datetime
+from datetime import datetime, date
 import time
 
 # Open a Chrome browser and navigate to the council planning page
@@ -16,8 +16,9 @@ import time
 
 site = 'https://pa.cheshirewestandchester.gov.uk/online-applications/search.do?action=advanced'
 
-# Eventually have these reflect the most recent record to the current date.
-start_date = '01/07/2022'
+# Get data from last week 
+start_date = date.today() - datetime.datetime.timedelta(days = 7)
+start_date = start_date.strftime("%d/%m/%Y")
 end_date = '08/07/2022'
 local_planning_authority = "Cheshire West and Chester"
 
