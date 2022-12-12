@@ -75,15 +75,15 @@ class ApplicationNavigator(SiteNavigator):
             # Assign attributes to the planning application based on array position
             app.reference = value_array[0]
             app.alt_reference = value_array[1]
-            app.date_received = datetime.strptime(value_array[2], "%a %d %b %Y").strftime("%Y-%m-%d")
+            app.date_received = datetime.datetime.strptime(value_array[2], "%a %d %b %Y").strftime("%Y-%m-%d")
             app.address = value_array[3]
             app.proposal = value_array[4]
             app.status = value_array[5]
             app.decision = value_array[6]
-            app.decision_date = datetime.strptime(value_array[7], "%a %d %b %Y").strftime("%Y-%m-%d")
+            app.decision_date = datetime.datetime.strptime(value_array[7], "%a %d %b %Y").strftime("%Y-%m-%d")
             app.appeal = value_array[8] 
             app.appeal_status = value_array[9]
-            app.date_collected = datetime.now().strftime("%Y-%m-%d")
+            app.date_collected = datetime.datetime.now().strftime("%Y-%m-%d")
             app.printAttributes()
             # Send planning application to database
             app.sendToDatabase(db.connection)
