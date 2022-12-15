@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.responses import FileResponse 
 from dbconnect import dbconnect
 import datetime
+import requests
 
 app = FastAPI()
 
@@ -21,4 +22,14 @@ def weekly_list():
     cur.execute(f"""SELECT * FROM applications WHERE DecisionDate >= {last_week.strftime("%Y/%m/%d")}""")
     results = cur.fetchall()
     return results
+
+@app.post("/near-me")
+def near_me(postcode, range=7):
+    """Return a list of all postcodes near the inputed postcode"""
+    results = requests.get(f"api.postcodes.io/{postcode}/nearest")
+    nearby = [x.get('postcode') for x in results]
+    cur = conn.cursor
+    cur.execute(f"""SELECT * FROM applications WHERE """)
+
+
 
