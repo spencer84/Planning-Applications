@@ -84,7 +84,9 @@ class ApplicationNavigator(SiteNavigator):
             app.appeal = value_array[8] 
             app.appeal_status = value_array[9]
             app.date_collected = datetime.datetime.now().strftime("%Y-%m-%d")
-            app.printAttributes()
+            # Attempt to extract a postcode field
+            app.get_postcode()
+            print(app)
             # Send planning application to database
             app.sendToDatabase(db.connection)
             # Return to search result page
