@@ -1,4 +1,5 @@
 import re
+import requests
 
 class PlanningApplication:
     def __init__(self):
@@ -15,6 +16,10 @@ class PlanningApplication:
         self.local_planning_authority = None
         self.date_collected = None
         self.postcode = None
+        # Additional geographic data
+        self.region = None
+        self.latitude = None
+        self.longitude = None
 
     def get_postcode(self):
         """ Use a regular expression to parse the address field and extract a postcode """   
@@ -51,3 +56,17 @@ class PlanningApplication:
         ON DUPLICATE KEY UPDATE DateDataRetrieved ='{self.date_collected}'""")
         print("Successfully inserted row")
         connection.commit()
+
+        """ Create table geo columns (ReferenceNumber, Postcode, Latitude, Longitude) )"""
+    def getGeoData(self):
+        """Request geodata from a application postcode"""
+        if self.postcode:
+            results = requests.get(f"https://api.postcodes.io/postcodes/{self.postcode}")
+            results = results.json().get('result')
+            self.region = results.get('region')
+            self.latitude = results.get('latitude')
+            self.longitude = results.get('longitude')
+
+    
+    def sendGeoData(self, connection):
+
