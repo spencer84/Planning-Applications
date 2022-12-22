@@ -59,7 +59,7 @@ class PlanningApplication:
 
         """ Create table geo columns (ReferenceNumber, Postcode, Latitude, Longitude) )"""
     def getGeoData(self):
-        """Request geodata from a application postcode"""
+        """Request geodata from an application postcode"""
         if self.postcode:
             results = requests.get(f"https://api.postcodes.io/postcodes/{self.postcode}")
             results = results.json().get('result')
@@ -67,6 +67,7 @@ class PlanningApplication:
             self.latitude = results.get('latitude')
             self.longitude = results.get('longitude')
 
-    
     def sendGeoData(self, connection):
+        cur = connection.cursor()
+        cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}'""")
 
