@@ -89,6 +89,8 @@ class ApplicationNavigator(SiteNavigator):
             print(app)
             # Send planning application to database
             app.sendToDatabase(db.connection)
+            app.getGeoData()
+            app.sendGeoData(db.connection)
             # Return to search result page
             self.driver.get(self.current_page)
 

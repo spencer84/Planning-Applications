@@ -18,8 +18,8 @@ class PlanningApplication:
         self.postcode = None
         # Additional geographic data
         self.region = None
-        self.latitude = None
-        self.longitude = None
+        self.latitude = 0.0
+        self.longitude = 0.0
 
     def get_postcode(self):
         """ Use a regular expression to parse the address field and extract a postcode """   
@@ -69,5 +69,6 @@ class PlanningApplication:
 
     def sendGeoData(self, connection):
         cur = connection.cursor()
-        cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}'""")
+        cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}', 
+        '{self.latitude}', '{self.longitude}')""")
 
