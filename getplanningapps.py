@@ -100,7 +100,6 @@ class ApplicationNavigator(SiteNavigator):
             self.current_page = next_page
             self.driver.get(self.current_page)
         except selenium.common.exceptions.NoSuchElementException:
-
             self.end_reached = True
             
 
