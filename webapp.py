@@ -32,7 +32,7 @@ def near_me(postcode, range=7):
     for postcode in nearby:
         codes += postcode
         if postcode != nearby[-1]:
-            codes += " "
+            codes += ", "
     cur = conn.cursor
     cur.execute(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
 
