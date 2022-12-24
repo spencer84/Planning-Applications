@@ -3,7 +3,7 @@ from dbconnect import dbconnect
 # Perform additional analysis on the Planning applications
 
 # 1. Geo-locate 
-#   - parse address field to extract a postcode if possible
+#   - parse address field to extract a postcode if possible -- Done
 db = dbconnect()
 db.connection.cursor()
 #   - functionality to identify exact location of application 
