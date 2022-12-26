@@ -44,15 +44,3 @@ async def near_me(item: Item):
     cur.execute(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
     applications = cur.fetchall()
     return applications
-
-import requests
-results = requests.get(f"https://api.postcodes.io/postcodes/CH11AB/nearest")
-nearby = [x.get('postcode') for x in results.json()['result']]
-codes = "\'"
-for postcode in nearby:
-    codes += postcode
-    if postcode != nearby[-1]:
-        codes += "\', \'"
-codes += '\''
-print(codes)
-print(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
