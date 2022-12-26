@@ -31,18 +31,28 @@ def weekly_list():
 @app.post("/near-me/")
 async def near_me(item: Item):
     """Return a list of all postcodes near the inputed postcode"""
-    results = requests.get(f"https://api.postcodes.io/{item.postcode}/nearest")
-    nearby = [x.get('postcode') for x in results]
-    codes = ""
+    results = requests.get(f"https://api.postcodes.io/postcodes/{item.postcode}/nearest")
+    nearby = [x.get('postcode') for x in results.json()['result']]
+    codes = "\'"
     for postcode in nearby:
         codes += postcode
         if postcode != nearby[-1]:
-            codes += ", "
+            codes += "\', \'"
+    codes += '\''
     cur = conn.cursor
     print(codes)
     cur.execute(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
     applications = cur.fetchall()
     return applications
 
-
-
+import requests
+results = requests.get(f"https://api.postcodes.io/postcodes/CH11AB/nearest")
+nearby = [x.get('postcode') for x in results.json()['result']]
+codes = "\'"
+for postcode in nearby:
+    codes += postcode
+    if postcode != nearby[-1]:
+        codes += "\', \'"
+codes += '\''
+print(codes)
+print(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
