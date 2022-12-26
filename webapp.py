@@ -3,11 +3,15 @@ from starlette.responses import FileResponse
 from dbconnect import dbconnect
 import datetime
 import requests
+from pydantic import BaseModel
 
 app = FastAPI()
 
 # Connect to database
 conn = dbconnect()
+
+class Item(BaseModel):
+    postcode: str
 
 
 @app.get("/")
@@ -23,10 +27,11 @@ def weekly_list():
     results = cur.fetchall()
     return results
 
-@app.post("/near-me")
-def near_me(postcode, range=7):
+
+@app.post("/near-me/")
+async def near_me(item: Item):
     """Return a list of all postcodes near the inputed postcode"""
-    results = requests.get(f"api.postcodes.io/{postcode}/nearest")
+    results = requests.get(f"https://api.postcodes.io/{item.postcode}/nearest")
     nearby = [x.get('postcode') for x in results]
     codes = ""
     for postcode in nearby:
@@ -34,7 +39,10 @@ def near_me(postcode, range=7):
         if postcode != nearby[-1]:
             codes += ", "
     cur = conn.cursor
+    print(codes)
     cur.execute(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
+    applications = cur.fetchall()
+    return applications
 
 
 
