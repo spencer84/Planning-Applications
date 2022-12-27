@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from starlette.responses import FileResponse 
 from dbconnect import dbconnect
 import datetime
@@ -29,9 +29,9 @@ def weekly_list():
 
 
 @app.post("/near-me/")
-async def near_me(item: Item):
+async def near_me(postcode: str = Form()):
     """Return a list of all postcodes near the inputed postcode"""
-    results = requests.get(f"https://api.postcodes.io/postcodes/{item.postcode}/nearest")
+    results = requests.get(f"https://api.postcodes.io/postcodes/{postcode}/nearest")
     nearby = [x.get('postcode') for x in results.json()['result']]
     codes = "\'"
     for postcode in nearby:
