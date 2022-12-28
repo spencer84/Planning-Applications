@@ -43,4 +43,6 @@ async def near_me(postcode: str = Form()):
     print(codes)
     cur.execute(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
     applications = cur.fetchall()
+    if len(applications) == 0:
+        return "There are no nearby planning applications"
     return applications
