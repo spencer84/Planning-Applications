@@ -57,7 +57,7 @@ class ApplicationNavigator(SiteNavigator):
         # Store the first page of results
         self.current_page = self.driver.current_url
         
-    def searchSubmitted(self):
+    def searchSubmitted(self, start_date = start_date, end_date = end_date):
         """
         Search submitted applications by a given date range 
         """
@@ -122,13 +122,13 @@ if __name__ == "__main__":
     nav.site = site
     nav.open_page()
     # First search through the decided results
-    nav.searchDecided()
-    while not nav.end_reached:
-        nav.add_results()
-        nav.next_page()
-        # Avoid 'Too Many Requests' error by waiting
-        time.sleep(60)
-    # Then search through submitted results
+    # nav.searchDecided()
+    # while not nav.end_reached:
+    #     nav.add_results()
+    #     nav.next_page()
+    #     # Avoid 'Too Many Requests' error by waiting
+    #     time.sleep(60)
+    # # Then search through submitted results
     nav.searchSubmitted()
     while not nav.end_reached:
         nav.add_results()

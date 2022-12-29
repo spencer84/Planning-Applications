@@ -7,9 +7,9 @@ from dbconnect import dbconnect
 db = dbconnect()
 db.connection.cursor()
 #   - functionality to identify exact location of application 
-#   - Nearby postcodes
+#   - Nearby postcodes -- Done
 
-# Create a table for more address details (i.e postcode, lat/long, etc)
+# Create a table for more address details (i.e postcode, lat/long, etc) -- Done
 
 # 2. Build NLP Model to interpret the type of application
 
