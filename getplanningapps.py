@@ -40,9 +40,9 @@ class ApplicationNavigator(SiteNavigator):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
             (By.XPATH, '//*[@id="ccc-reject-settings"]'))).click()
 
-    def search(self):
+    def searchDecided(self):
         """
-        Search by a given date range
+        Search decided applications by a given date range
         :return:
         """
         self.end_reached = False
@@ -57,7 +57,21 @@ class ApplicationNavigator(SiteNavigator):
         # Store the first page of results
         self.current_page = self.driver.current_url
         
+    def searchSubmitted(self):
+        """
+        Search submitted applications by a given date range 
+        """
+        nav.end_reached = False
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+            (By.XPATH, "//*[@id=\"applicationCommitteeStart\"]"))).send_keys(start_date)
+        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+            (By.XPATH, "//*[@id=\"applicationCommitteeEnd\"]"))).send_keys(
+            end_date)
+        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
+            (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
 
+        # Store the first page of results
+        self.current_page = self.driver.current_url
 
     def add_results(self):
         """For every search result on a page, visit each link, then parse content to a database"""
@@ -107,7 +121,15 @@ if __name__ == "__main__":
     nav = ApplicationNavigator()
     nav.site = site
     nav.open_page()
-    nav.search()
+    # First search through the decided results
+    nav.searchDecided()
+    while not nav.end_reached:
+        nav.add_results()
+        nav.next_page()
+        # Avoid 'Too Many Requests' error by waiting
+        time.sleep(60)
+    # Then search through submitted results
+    nav.searchSubmitted()
     while not nav.end_reached:
         nav.add_results()
         nav.next_page()
