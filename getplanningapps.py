@@ -40,7 +40,7 @@ class ApplicationNavigator(SiteNavigator):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
             (By.XPATH, '//*[@id="ccc-reject-settings"]'))).click()
 
-    def searchDecided(self):
+    def searchDecided(self, start_date = start_date, end_date = end_date):
         """
         Search decided applications by a given date range
         :return:
@@ -121,6 +121,10 @@ if __name__ == "__main__":
     nav = ApplicationNavigator()
     nav.site = site
     nav.open_page()
+    some_time_ago = datetime.date(2022, 7, 1)
+    one_week_later = some_time_ago+datetime.timedelta(days=7)
+    some_time_ago = some_time_ago.strftime("%d/%m/%Y")
+    one_week_later = one_week_later.strftime("%d/%m/%Y")
     # First search through the decided results
     # nav.searchDecided()
     # while not nav.end_reached:
@@ -129,7 +133,7 @@ if __name__ == "__main__":
     #     # Avoid 'Too Many Requests' error by waiting
     #     time.sleep(60)
     # # Then search through submitted results
-    nav.searchSubmitted()
+    nav.searchSubmitted(start_date=some_time_ago, end_date=one_week_later)
     while not nav.end_reached:
         nav.add_results()
         nav.next_page()
