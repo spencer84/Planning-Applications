@@ -63,9 +63,9 @@ class ApplicationNavigator(SiteNavigator):
         """
         nav.end_reached = False
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationCommitteeStart\"]"))).send_keys(start_date)
+            (By.XPATH, "//*[@id=\"applicationReceivedStart\"]"))).send_keys(start_date)
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationCommitteeEnd\"]"))).send_keys(
+            (By.XPATH, "//*[@id=\"applicationReceivedEnd\"]"))).send_keys(
             end_date)
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
             (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
@@ -84,19 +84,25 @@ class ApplicationNavigator(SiteNavigator):
             app.local_planning_authority = local_planning_authority
             # Get data here
             values = self.driver.find_elements(By.TAG_NAME, "td" )
-            # Extract the text from the td elements (showing the descriptive values)
+            keys = self.driver.find_elements(By.TAG_NAME, "th")
+            # Extract the text from the td/th elements (showing the descriptive values)
+            key_array = [key.text for key in keys]
             value_array = [value.text for value in values]
+            print(value_array)
+            value_dict = dict(zip(key_array, value_array))
+            print(value_dict)
             # Assign attributes to the planning application based on array position
-            app.reference = value_array[0]
-            app.alt_reference = value_array[1]
-            app.date_received = datetime.datetime.strptime(value_array[2], "%a %d %b %Y").strftime("%Y-%m-%d")
-            app.address = value_array[3]
-            app.proposal = value_array[4]
-            app.status = value_array[5]
-            app.decision = value_array[6]
-            app.decision_date = datetime.datetime.strptime(value_array[7], "%a %d %b %Y").strftime("%Y-%m-%d")
-            app.appeal = value_array[8] 
-            app.appeal_status = value_array[9]
+            app.reference = value_dict.get('Reference')
+            app.alt_reference = value_dict.get('Alternative Reference')
+            app.date_received = datetime.datetime.strptime(value_dict.get('Application Received'), "%a %d %b %Y").strftime("%Y-%m-%d")
+            app.address = value_dict.get('Address')
+            app.proposal = value_dict.get('Proposal')
+            app.status = value_dict.get('Status')
+            app.decision = value_dict.get('Decision')
+            if value_dict.get('Decision Issue Date'):
+                app.decision_date = datetime.datetime.strptime(value_dict.get('Decision Issue Date'), "%a %d %b %Y").strftime("%Y-%m-%d")
+            app.appeal = value_dict.get('Appeal Decision')
+            app.appeal_status = value_dict.get('Appeal Status')
             app.date_collected = datetime.datetime.now().strftime("%Y-%m-%d")
             # Attempt to extract a postcode field
             app.get_postcode()
