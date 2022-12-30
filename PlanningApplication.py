@@ -63,9 +63,12 @@ class PlanningApplication:
         if self.postcode:
             results = requests.get(f"https://api.postcodes.io/postcodes/{self.postcode}")
             results = results.json().get('result')
-            self.region = results.get('region')
-            self.latitude = results.get('latitude')
-            self.longitude = results.get('longitude')
+            try:
+                self.region = results.get('region')
+                self.latitude = results.get('latitude')
+                self.longitude = results.get('longitude')
+            except AttributeError as e:
+                pass
 
     def sendGeoData(self, connection):
         cur = connection.cursor()
