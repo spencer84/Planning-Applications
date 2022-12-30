@@ -10,7 +10,7 @@ class PlanningApplication:
         self.proposal = None
         self.status = None
         self.decision = None
-        self.decision_date = None
+        self.decision_date = "9999-12-31"
         self.appeal = None
         self.appeal_status = None
         self.local_planning_authority = None
