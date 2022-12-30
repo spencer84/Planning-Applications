@@ -77,7 +77,6 @@ class ApplicationNavigator(SiteNavigator):
         """For every search result on a page, visit each link, then parse content to a database"""
         WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.XPATH, "//*[@class=\'searchresult\']/a")))
         self.search_results = [element.get_attribute("href") for element in self.driver.find_elements(By.XPATH, "//*[@class=\'searchresult\']/a")]
-        print(self.search_results)
         for link in self.search_results:
             self.driver.get(link)
             app = PlanningApplication()
@@ -88,9 +87,7 @@ class ApplicationNavigator(SiteNavigator):
             # Extract the text from the td/th elements (showing the descriptive values)
             key_array = [key.text for key in keys]
             value_array = [value.text for value in values]
-            print(value_array)
             value_dict = dict(zip(key_array, value_array))
-            print(value_dict)
             # Assign attributes to the planning application based on array position
             app.reference = value_dict.get('Reference')
             app.alt_reference = value_dict.get('Alternative Reference')
