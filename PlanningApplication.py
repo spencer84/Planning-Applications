@@ -1,5 +1,6 @@
 import re
 import requests
+import string
 
 class PlanningApplication:
     def __init__(self):
@@ -20,6 +21,8 @@ class PlanningApplication:
         self.region = None
         self.latitude = 0.0
         self.longitude = 0.0
+        # Add processed text data
+        self.proposal_parsed = []
 
     def get_postcode(self):
         """ Use a regular expression to parse the address field and extract a postcode """   
@@ -74,4 +77,12 @@ class PlanningApplication:
         cur = connection.cursor()
         cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}', 
         '{self.latitude}', '{self.longitude}')""")
+
+    def parseProposal(self):
+        """Need to prepare proposal text for further analysis and transfer into an array format"""
+        # Convert text to all lowercase
+        cleaned_text = lower(self.proposal)
+        # Remove punctuation
+        cleaned_text = cleaned_text.translate(str.maketrans('', '', string.punctuation))
+
 
