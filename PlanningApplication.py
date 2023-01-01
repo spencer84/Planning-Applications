@@ -81,8 +81,13 @@ class PlanningApplication:
     def parseProposal(self):
         """Need to prepare proposal text for further analysis and transfer into an array format"""
         # Convert text to all lowercase
-        cleaned_text = lower(self.proposal)
+        if self.proposal:
+            cleaned_text = self.proposal.lower()
+        else:
+            return
         # Remove punctuation
         cleaned_text = cleaned_text.translate(str.maketrans('', '', string.punctuation))
+        # Split string by spaces
+        self.proposal_parsed = cleaned_text.split(" ")
 
 
