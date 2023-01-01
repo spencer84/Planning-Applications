@@ -124,7 +124,7 @@ if __name__ == "__main__":
     nav = ApplicationNavigator()
     nav.site = site
     nav.open_page()
-    some_time_ago = datetime.date(2022, 7, 1)
+    some_time_ago = datetime.date(2022, 7, 7)
     one_week_later = some_time_ago+datetime.timedelta(days=7)
     some_time_ago = some_time_ago.strftime("%d/%m/%Y")
     one_week_later = one_week_later.strftime("%d/%m/%Y")
