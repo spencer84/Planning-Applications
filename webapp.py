@@ -33,6 +33,7 @@ async def near_me(postcode: str = Form()):
     """Return a list of all postcodes near the inputed postcode"""
     results = requests.get(f"https://api.postcodes.io/postcodes/{postcode}/nearest")
     nearby = [x.get('postcode') for x in results.json()['result']]
+    # Create a string of postcodes for the SQL query
     codes = "\'"
     for postcode in nearby:
         codes += postcode
