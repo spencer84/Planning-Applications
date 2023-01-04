@@ -129,14 +129,14 @@ if __name__ == "__main__":
     some_time_ago = some_time_ago.strftime("%d/%m/%Y")
     one_week_later = one_week_later.strftime("%d/%m/%Y")
     # First search through the decided results
-    # nav.searchDecided()
-    # while not nav.end_reached:
-    #     nav.add_results()
-    #     nav.next_page()
-    #     # Avoid 'Too Many Requests' error by waiting
-    #     time.sleep(60)
+    nav.searchDecided()
+    while not nav.end_reached:
+        nav.add_results()
+        nav.next_page()
+        # Avoid 'Too Many Requests' error by waiting
+        time.sleep(60)
     # # Then search through submitted results
-    nav.searchSubmitted(start_date=some_time_ago, end_date=one_week_later)
+    nav.searchSubmitted()
     while not nav.end_reached:
         nav.add_results()
         nav.next_page()
