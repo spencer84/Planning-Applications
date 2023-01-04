@@ -27,6 +27,14 @@ def weekly_list():
     results = cur.fetchall()
     return results
 
+@app.get("/received-last-week")
+def sub_weekly_list():
+    """Return a list of weekly planning applications -- received in the last week"""
+    cur = conn.cursor
+    last_week = datetime.datetime.now() - datetime.timedelta(days=7)
+    cur.execute(f"""SELECT * FROM applications WHERE DateReceived >= {last_week.strftime("%Y/%m/%d")}""")
+    results = cur.fetchall()
+    return results
 
 @app.post("/near-me/")
 async def near_me(postcode: str = Form()):
