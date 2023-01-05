@@ -46,13 +46,16 @@ class ApplicationNavigator(SiteNavigator):
         :return:
         """
         self.end_reached = False
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationDecisionStart\"]"))).send_keys(start_date)
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationDecisionEnd\"]"))).send_keys(
-            end_date)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
-            (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
+        try:
+            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+                (By.XPATH, "//*[@id=\"applicationDecisionStart\"]"))).send_keys(start_date)
+            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+                (By.XPATH, "//*[@id=\"applicationDecisionEnd\"]"))).send_keys(
+                end_date)
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
+                (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
+        except selenium.common.exceptions.TimeoutException:
+            return
 
         # Store the first page of results
         self.current_page = self.driver.current_url
@@ -62,13 +65,16 @@ class ApplicationNavigator(SiteNavigator):
         Search submitted applications by a given date range 
         """
         nav.end_reached = False
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationReceivedStart\"]"))).send_keys(start_date)
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
-            (By.XPATH, "//*[@id=\"applicationReceivedEnd\"]"))).send_keys(
-            end_date)
-        WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
-            (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
+        try:
+            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+                (By.XPATH, "//*[@id=\"applicationReceivedStart\"]"))).send_keys(start_date)
+            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
+                (By.XPATH, "//*[@id=\"applicationReceivedEnd\"]"))).send_keys(
+                end_date)
+            WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable(
+                (By.XPATH, '/html/body/div/div/div[3]/div[3]/div[2]/form/div[4]/input[2]'))).click()
+        except selenium.common.exceptions.TimeoutException:
+            return
 
         # Store the first page of results
         self.current_page = self.driver.current_url
