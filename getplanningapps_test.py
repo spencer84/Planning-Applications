@@ -1,13 +1,14 @@
 import unittest
-import dbconnect
+from dbconnect import dbconnect
 from PlanningApplication import PlanningApplication
 
 # Test out the ability to accurately update planning application data
 
 class TestPlanningApplication(unittest.TestCase):
-    def test_update():
+    def test_update(self):
         """Check to confirm that old data in the database is replaced by more recent data"""
-        con = dbconnect.dbconnect()
+        db = dbconnect()
+        db.connect()
         # Create a test example to be overwritten
         # Values to be updated: status, decision, decision_date, appeal, appeal_status, date_collected
         old_app = PlanningApplication()
@@ -17,7 +18,7 @@ class TestPlanningApplication(unittest.TestCase):
         old_app.decision_date = "9998-12-31"
         old_app.appeal = "old"
         old_app.appeal_status = "old"
-        old_app.sendToDatabase(con)
+        old_app.sendToDatabase(db.connection)
         # Create a newer value to overwrite
         new_app = PlanningApplication()
         new_app.reference = "Test1"
@@ -26,10 +27,13 @@ class TestPlanningApplication(unittest.TestCase):
         new_app.decision_date = "9999-12-31"
         new_app.appeal = "new"
         new_app.appeal_status = "new"
-        new_app.sendToDatabase(con)
-        
-    def test_update_submitted():
-        """A 'submitted' record shall be updated by elements of a 'decided' record"""
+        new_app.sendToDatabase(db.connection)
+        con.cursor.execute("select * from applications where Reference = 'Test1'")
+        results = con.cursor.fetchall()
+        print(results)
+        #self.assertEqual() 
+    # def test_update_submitted():
+    #     """A 'submitted' record shall be updated by elements of a 'decided' record"""
 
 
 if __name__ == "__main__":
