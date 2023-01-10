@@ -56,7 +56,11 @@ class PlanningApplication:
         Address, Proposal, Status, Decision, DecisionDate, Appeal, AppealStatus, DateDataRetrieved, Postcode) values ('{self.reference}', '{self.local_planning_authority}','{self.alt_reference}',
         '{self.date_received}','{self.address}','{self.proposal}','{self.status}','{self.decision}','{self.decision_date}','{self.appeal}',
         '{self.appeal_status}', '{self.date_collected}', '{self.postcode}')
-        ON DUPLICATE KEY UPDATE DateDataRetrieved ='{self.date_collected}'""")
+        ON DUPLICATE KEY UPDATE DateDataRetrieved ='{self.date_collected}', 
+        Status = '{self.status}', 
+        Appeal = '{self.appeal}', 
+        AppealStatus = '{self.appeal_status}'
+        """)
         print("Successfully inserted row")
         connection.commit()
 
