@@ -99,11 +99,13 @@ class ApplicationNavigator(SiteNavigator):
             app.alt_reference = value_dict.get('Alternative Reference')
             app.date_received = datetime.datetime.strptime(value_dict.get('Application Received'), "%a %d %b %Y").strftime("%Y-%m-%d")
             app.address = value_dict.get('Address')
+            # Need to handle special characters ('') in the proposal
             app.proposal = value_dict.get('Proposal')
+            app.proposal.replace('\'', '')
             app.status = value_dict.get('Status')
             app.decision = value_dict.get('Decision')
-            if value_dict.get('Decision Issue Date'):
-                app.decision_date = datetime.datetime.strptime(value_dict.get('Decision Issue Date'), "%a %d %b %Y").strftime("%Y-%m-%d")
+            if value_dict.get('Decision Issued Date'): 
+                app.decision_date = datetime.datetime.strptime(value_dict.get('Decision Issued Date'), "%a %d %b %Y").strftime("%Y-%m-%d")
             app.appeal = value_dict.get('Appeal Decision')
             app.appeal_status = value_dict.get('Appeal Status')
             app.date_collected = datetime.datetime.now().strftime("%Y-%m-%d")
