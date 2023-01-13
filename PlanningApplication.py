@@ -95,5 +95,11 @@ class PlanningApplication:
         cleaned_text = cleaned_text.translate(str.maketrans('', '', string.punctuation))
         # Split string by spaces
         self.proposal_parsed = cleaned_text.split(" ")
+    
+    def lemmAndStem(self):
+        """Apply Lemmation and Stemmation to the parsed text as a prelude"""
+        self.proposal_lemm = lem(self.proposal_parsed)
+        self.proposal_stem = stem(self.proposal_lemm)
+
 
 
