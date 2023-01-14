@@ -101,7 +101,8 @@ class ApplicationNavigator(SiteNavigator):
             app.address = value_dict.get('Address')
             # Need to handle special characters ('') in the proposal
             app.proposal = value_dict.get('Proposal')
-            app.proposal.replace('\'', '')
+            app.proposal = app.proposal.replace('\'', '')
+            app.proposal = app.proposal.replace('\"', '')
             app.status = value_dict.get('Status')
             app.decision = value_dict.get('Decision')
             if value_dict.get('Decision Issued Date'): 
