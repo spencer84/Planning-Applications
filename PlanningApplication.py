@@ -1,6 +1,7 @@
 import re
 import requests
 import string
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
 
 class PlanningApplication:
     def __init__(self):
@@ -98,8 +99,10 @@ class PlanningApplication:
     
     def lemmAndStem(self):
         """Apply Lemmation and Stemmation to the parsed text as a prelude"""
-        self.proposal_lemm = lem(self.proposal_parsed)
-        self.proposal_stem = stem(self.proposal_lemm)
+        lemmer = WordNetLemmatizer()
+        stemmer = SnowballStemmer("english")
+        self.proposal_lemm = [lemmer.lemmatize(x) for x in self.proposal_parsed]
+        self.proposal_stem = [stemmer.stem(x) for x in self.proposal_lemm]
 
 
 
