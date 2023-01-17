@@ -103,6 +103,11 @@ class PlanningApplication:
         stemmer = SnowballStemmer("english")
         self.proposal_lemm = [lemmer.lemmatize(x) for x in self.proposal_parsed]
         self.proposal_stem = [stemmer.stem(x) for x in self.proposal_lemm]
+    
+    def sendNLP(self, connection):
+        """Send the processed proposal to the database"""
+        cur = connection.cursor()
+        cur.execute(f"""INSERT INTO nlp (ReferenceNumber, Lemmation, Stemming) values ('{self.reference}', '{self.proposal_lemm}', '{self.proposal_stem}')""")
 
 
 
