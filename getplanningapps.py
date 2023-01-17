@@ -86,6 +86,7 @@ class ApplicationNavigator(SiteNavigator):
         for link in self.search_results:
             self.driver.get(link)
             app = PlanningApplication()
+            app.link = link
             app.local_planning_authority = local_planning_authority
             # Get data here
             values = self.driver.find_elements(By.TAG_NAME, "td" )
@@ -115,8 +116,12 @@ class ApplicationNavigator(SiteNavigator):
             print(app)
             # Send planning application to database
             app.sendToDatabase(db.connection)
+            # Parse geo data and send to db
             app.getGeoData()
             app.sendGeoData(db.connection)
+            # Parse proposal and send to nlp db
+            app.lemmAndStem()
+            app.sendNLP(db.connection)
             # Return to search result page
             self.driver.get(self.current_page)
 
