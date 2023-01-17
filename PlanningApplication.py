@@ -18,6 +18,7 @@ class PlanningApplication:
         self.local_planning_authority = None
         self.date_collected = None
         self.postcode = None
+        self.link = None
         # Additional geographic data
         self.region = None
         self.latitude = 0.0
