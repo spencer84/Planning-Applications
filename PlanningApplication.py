@@ -102,6 +102,7 @@ class PlanningApplication:
     
     def lemmAndStem(self):
         """Apply Lemmation and Stemmation to the parsed text as a prelude"""
+        self.parseProposal()
         lemmer = WordNetLemmatizer()
         stemmer = SnowballStemmer("english")
         self.proposal_lemm = [lemmer.lemmatize(x) for x in self.proposal_parsed]
