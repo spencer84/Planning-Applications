@@ -101,13 +101,21 @@ class PlanningApplication:
         self.proposal_parsed = cleaned_text.split(" ")
     
     def lemmAndStem(self):
-        """Apply Lemmation and Stemmation to the parsed text as a prelude"""
+        """Apply Lemmation and Stemmation to the parsed text as a prelude to further NLP analysis"""
         self.parseProposal()
         lemmer = WordNetLemmatizer()
         stemmer = SnowballStemmer("english")
-        self.proposal_lemm = [lemmer.lemmatize(x) for x in self.proposal_parsed]
-        self.proposal_stem = [stemmer.stem(x) for x in self.proposal_lemm]
-    
+        self.proposal_lemm = ''
+        for x in self.proposal_parsed:
+            self.proposal_lemm += lemmer.lemmatize(x)
+            if x != self.proposal_parsed[-1]:
+                self.proposal_lemm += ' '
+        self.proposal_stem = ''
+        for x in self.proposal_parsed:
+            self.proposal_stem += stemmer.stem(x)
+            if x != self.proposal_parsed[-1]:
+                self.proposal_stem += ' '
+
     def sendNLP(self, connection):
         """Send the processed proposal to the database"""
         cur = connection.cursor()
