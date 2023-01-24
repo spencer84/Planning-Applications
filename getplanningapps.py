@@ -121,9 +121,6 @@ class ApplicationNavigator(SiteNavigator):
             app.sendGeoData(db.connection)
             # Parse proposal and send to nlp db
             app.lemmAndStem()
-            print(app.proposal_parsed)
-            print(app.proposal_lemm)
-            print(app.proposal_stem)
             app.sendNLP(db.connection)
             # Return to search result page
             self.driver.get(self.current_page)
