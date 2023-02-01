@@ -86,7 +86,10 @@ class PlanningApplication:
     def sendGeoData(self, connection):
         cur = connection.cursor()
         cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}', 
-        '{self.latitude}', '{self.longitude}')""")
+        '{self.latitude}', '{self.longitude}')
+        ON DUPLICATE KEY UPDATE
+        Latitude = '{self.latitude}',
+        Longitude = '{self.longitude}'""")
 
     def parseProposal(self):
         """Need to prepare proposal text for further analysis and transfer into an array format"""
@@ -119,7 +122,11 @@ class PlanningApplication:
     def sendNLP(self, connection):
         """Send the processed proposal to the database"""
         cur = connection.cursor()
-        cur.execute(f"""INSERT INTO nlp (ReferenceNumber, Lemmation, Stemming) values ('{self.reference}', '{self.proposal_lemm}', '{self.proposal_stem}')""")
+        cur.execute(f"""INSERT INTO nlp (ReferenceNumber, Lemmation, Stemming) values ('{self.reference}', '{self.proposal_lemm}', '{self.proposal_stem}')
+        ON DUPLICATE KEY UPDATE 
+        Lemmation = '{self.proposal_lemm}',
+        Stemming = '{self.proposal_stem}'
+        """)
 
 
 
