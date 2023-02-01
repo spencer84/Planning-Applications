@@ -32,6 +32,9 @@ class ApplicationNavigator(SiteNavigator):
     Inherited from the SiteNavigator class, this class is designed specifically for parsing Planning Applications stored
     on a council's website.
     """
+    def __init__(self):
+        self.number_of_applications = 0
+
     def agree(self):
         """
         Agree to any terms/agreements that may be at the page
@@ -86,6 +89,7 @@ class ApplicationNavigator(SiteNavigator):
         for link in self.search_results:
             self.driver.get(link)
             app = PlanningApplication()
+            self.number_of_applications +=1
             app.link = link
             app.local_planning_authority = local_planning_authority
             # Get data here
@@ -156,6 +160,7 @@ if __name__ == "__main__":
         nav.next_page()
         # Avoid 'Too Many Requests' error by waiting
         time.sleep(60)
+    print(f"Total number of applications added: {nav.number_of_applications}")
     db.connection.close()
 
     
