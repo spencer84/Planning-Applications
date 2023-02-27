@@ -100,6 +100,7 @@ class ApplicationNavigator(SiteNavigator):
             value_array = [value.text for value in values]
             value_dict = dict(zip(key_array, value_array))
             # Assign attributes to the planning application based on array position
+            print(value_dict)
             app.reference = value_dict.get('Reference')
             app.alt_reference = value_dict.get('Alternative Reference')
             app.date_received = datetime.datetime.strptime(value_dict.get('Application Received'), "%a %d %b %Y").strftime("%Y-%m-%d")

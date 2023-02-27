@@ -1,5 +1,6 @@
 from creds import username, password
 import mariadb
+import dbinit
 
 class dbconnect:
     def __init__(self):
