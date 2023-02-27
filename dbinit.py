@@ -21,3 +21,19 @@ def createGeoDatabase(cursor):
     """
     cursor.execute(query)
     return
+
+def createNLPDatabase(cursor):
+    # Database for geographic data
+    query = """ 
+    CREATE TABLE IF NOT EXISTS nlp (ReferenceNumber text, Lemmation text, Stemming text) ;
+    """
+    cursor.execute(query)
+    return
+
+if __name__ == "__main__":
+    connection = mariadb.connect(user = username, password = password, database = "planning")
+    cursor = connection.cursor()
+    createApplicationDatabase(cursor)
+    createGeoDatabase(cursor)
+    createNLPDatabase(cursor)
+    connection.commit()
