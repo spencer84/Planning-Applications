@@ -44,8 +44,7 @@ async def near_me(postcode: str = Form()):
         if postcode != nearby[-1]:
             codes += "\', \'"
     codes += '\''
-    conn.queryJSON(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
-    applications = cur.fetchall()
-    if len(applications) == 0:
+    results = conn.queryJSON(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
+    if len(results['results']) == 0:
         return "There are no nearby planning applications"
-    return applications
+    return results
