@@ -1,17 +1,25 @@
 <!DOCTYPE html>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" type="text/css" href="index.css" /> 
+</head>
+
 <center>
   <h1> Cheshire West and Chester Planning Applications </h1>
-  <p1> <a href="/decided-last-week"> Applications decided last week</a></p1>
-  <br>
-  <br>
-  <p1> <a href="/received-last-week"> Applications received last week</a></p1>
-  <br>
-  <br>
-  <p2> 
-      <a> View Planning Applications near me </a>
-      <form action ='/near-me/' method ="post">
-        <input type = "json" id = "postcode" name = "postcode">
-        <input type = "submit" value = "Submit">  
-      </form>
-  </p2>
+  <body>
+    <p1> <a href="/decided-last-week"> Applications decided last week</a></p1>
+    <br>
+    <br>
+    <p1> <a href="/received-last-week"> Applications received last week</a></p1>
+    <br>
+    <br>
+    <p2> 
+        <a> View Planning Applications near me </a>
+        <form action ='/near-me/' method ="post">
+          <input type = "json" id = "postcode" name = "postcode">
+          <input type = "submit" value = "Submit">  
+        </form>
+    </p2>
+  </body>
+  
 </center>
