@@ -16,3 +16,9 @@ class dbconnect:
         except Exception as e:
             print("Error connecting to MySQL database: "+ e.msg)
         return
+    def queryJSON(self, query):
+        """Query the database and return a result in JSON format"""
+        self.cursor.execute(query)
+        r = [dict((self.cursor.description[i][0], value) \
+               for i, value in enumerate(row)) for row in self.cursor.fetchall()]
+        return {'results':r}
