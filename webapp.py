@@ -47,4 +47,4 @@ async def near_me(postcode: str = Form()):
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE postcode in ({codes})""")
     if len(results['results']) == 0:
         return "There are no nearby planning applications"
-    return results
+    return results 
