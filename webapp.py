@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Form
-from starlette.responses import FileResponse 
+from fastapi import FastAPI, Form, Request
+from starlette.responses import FileResponse, HTMLResponse 
 from dbconnect import dbconnect
 import datetime
 import requests
 from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
@@ -13,17 +15,21 @@ conn = dbconnect()
 class Item(BaseModel):
     postcode: str
 
+templates = Jinja2Templates(directory="templates")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get("/")
 async def read_index():
     return FileResponse('./templates/index.html')
 
-@app.get("/decided-last-week")
-def weekly_list():
+@app.get("/decided-last-week", response_class=HTMLResponse)
+def weekly_list(request: Request):
     """Return a list of weekly planning applications -- decided in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= {last_week.strftime("%Y/%m/%d")}""")
-    return results
+    return templates.TemplateResponse("results.html", {"request": request, "results": results})
 
 @app.get("/received-last-week")
 def sub_weekly_list():
