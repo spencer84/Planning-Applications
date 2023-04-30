@@ -56,3 +56,11 @@ async def near_me(postcode: str = Form()):
     if len(results['results']) == 0:
         return "There are no nearby planning applications"
     return results 
+
+@app.post("/reference-number/")
+async def search_ref(ref: str = Form()):
+    """Search applications by a given reference number"""
+    results = conn.queryJSON(f"""SELECT * FROM applications where ReferenceNumber like "%{ref}%" limit 1""")
+    if len(results['results']) == 0:
+        return "No applications found matching this Reference Number"
+    return results
