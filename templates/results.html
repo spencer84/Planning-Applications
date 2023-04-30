@@ -5,10 +5,37 @@
 <center>
   <h1> Cheshire West and Chester Planning Applications </h1>
   <body>
-  <h2> Applications decided last week </h2>  
-    <br>
-    <h3>{{ results['results'][0]['ReferenceNumber'] }} </h3>
-    <p> Date Received {{ results['results'][0]['DateReceived']}}</p>
+  <h2> Decided Last Week </h2>  
+
+    <h3><a href={{ results['results'][0]['Link']}}> {{ results['results'][0]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][0]['Proposal']}}</p>
+    <p> Decision: <b>{{ results['results'][0]['Decision']}}</b></p>
+    <p> Date Received: {{ results['results'][0]['DateReceived']}}</p>
+    <p> Date Decided: {{ results['results'][0]['DecisionDate']}}</p>
+
+    <h3><a href={{ results['results'][1]['Link']}}> {{ results['results'][1]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][1]['Proposal']}}</p>
+    <p> Decision: <b>{{ results['results'][1]['Decision']}}</b></p>
+    <p> Date Received: {{ results['results'][1]['DateReceived']}}</p>
+    <p> Date Decided: {{ results['results'][1]['DecisionDate']}}</p>
+    
+    <h3><a href={{ results['results'][2]['Link']}}> {{ results['results'][2]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][2]['Proposal']}}</p>
+    <p> Decision: <b>{{ results['results'][2]['Decision']}}</b></p>
+    <p> Date Received: {{ results['results'][2]['DateReceived']}}</p>
+    <p> Date Decided: {{ results['results'][2]['DecisionDate']}}</p>
+    
+    <h3><a href={{ results['results'][3]['Link']}}> {{ results['results'][3]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][3]['Proposal']}}</p>
+    <p> Decision: <b>{{ results['results'][3]['Decision']}}</b></p>
+    <p> Date Received: {{ results['results'][3]['DateReceived']}}</p>
+    <p> Date Decided: {{ results['results'][3]['DecisionDate']}}</p>
+    
+    <h3><a href={{ results['results'][4]['Link']}}> {{ results['results'][4]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][4]['Proposal']}}</p>
+    <p> Decision: <b>{{ results['results'][4]['Decision']}}</b></p>
+    <p> Date Received: {{ results['results'][4]['DateReceived']}}</p>
+    <p> Date Decided: {{ results['results'][4]['DecisionDate']}}</p>
     <br>
     <br>
     <br>

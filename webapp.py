@@ -31,6 +31,8 @@ def weekly_list(request: Request):
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= {last_week.strftime("%Y/%m/%d")}""")
     return templates.TemplateResponse("results.html", {"request": request, "results": results})
 
+
+
 @app.get("/received-last-week")
 def sub_weekly_list():
     """Return a list of weekly planning applications -- received in the last week"""
