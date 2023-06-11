@@ -103,7 +103,8 @@ class ApplicationNavigator(SiteNavigator):
             print(value_dict)
             app.reference = value_dict.get('Reference')
             app.alt_reference = value_dict.get('Alternative Reference')
-            app.date_received = datetime.datetime.strptime(value_dict.get('Application Received'), "%a %d %b %Y").strftime("%Y-%m-%d")
+            if value_dict.get('Application Received'): 
+                app.date_received = datetime.datetime.strptime(value_dict.get('Application Received'), "%a %d %b %Y").strftime("%Y-%m-%d")
             app.address = value_dict.get('Address')
             # Need to handle special characters ('') in the proposal
             app.proposal = value_dict.get('Proposal')
