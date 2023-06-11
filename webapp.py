@@ -28,7 +28,9 @@ async def read_index():
 def weekly_list(request: Request):
     """Return a list of weekly planning applications -- decided in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
-    results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= {last_week.strftime("%Y/%m/%d")}""")
+    results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= '{last_week.strftime("%Y-%m-%d")}';""")
+    print(last_week.strftime("%Y/%m/%d"))
+    #print(results)
     return templates.TemplateResponse("results.html", {"request": request, "results": results})
 
 
@@ -37,7 +39,7 @@ def weekly_list(request: Request):
 def sub_weekly_list():
     """Return a list of weekly planning applications -- received in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
-    results = conn.queryJSON(f"""SELECT * FROM applications WHERE DateReceived >= {last_week.strftime("%Y/%m/%d")}""")
+    results = conn.queryJSON(f"""SELECT * FROM applications WHERE DateReceived >= '{last_week.strftime("%Y-%m-%d")}';""")
     return results
 
 @app.post("/near-me/")
