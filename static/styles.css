@@ -10,3 +10,5 @@ body {
     color: #276e65;
   }
   
+  #map { height: 180px;
+        width: 180px; }

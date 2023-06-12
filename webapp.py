@@ -29,8 +29,6 @@ def weekly_list(request: Request):
     """Return a list of weekly planning applications -- decided in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= '{last_week.strftime("%Y-%m-%d")}';""")
-    print(last_week.strftime("%Y/%m/%d"))
-    #print(results)
     return templates.TemplateResponse("results.html", {"request": request, "results": results})
 
 
@@ -50,6 +48,7 @@ async def near_me(postcode: str = Form()):
     # Create a string of postcodes for the SQL query
     codes = "\'"
     for postcode in nearby:
+        print(postcode)
         codes += postcode
         if postcode != nearby[-1]:
             codes += "\', \'"
