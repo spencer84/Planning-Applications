@@ -9,7 +9,8 @@ def createApplicationDatabase(cursor):
     CREATE TABLE IF NOT EXISTS applications 
     (ReferenceNumber text, LocalPlanningAuthority text, AlternativeReferenceNumber text,
     DateReceived date, Address text, Proposal text, Status text, Decision text, DecisionDate text,
-    Appeal text, AppealStatus text, DateDataRetrieved date, Postcode text, Link text);
+    Appeal text, AppealStatus text, DateDataRetrieved date, Postcode text, Link text,
+    CONSTRAINT ReferenceNumber PRIMARY KEY (ReferenceNumber));
     """
     cursor.execute(query)
     return
@@ -17,7 +18,8 @@ def createApplicationDatabase(cursor):
 def createGeoDatabase(cursor):
     # Database for geographic data
     query = """ 
-    CREATE TABLE IF NOT EXISTS geo (ReferenceNumber text, Postcode text, Latitude text, Longitude text);
+    CREATE TABLE IF NOT EXISTS geo (ReferenceNumber text, Postcode text, Latitude text, Longitude text,
+    CONSTRAINT ReferenceNumber PRIMARY KEY (ReferenceNumber)));
     """
     cursor.execute(query)
     return
@@ -25,7 +27,8 @@ def createGeoDatabase(cursor):
 def createNLPDatabase(cursor):
     # Database for geographic data
     query = """ 
-    CREATE TABLE IF NOT EXISTS nlp (ReferenceNumber text, Lemmation text, Stemming text) ;
+    CREATE TABLE IF NOT EXISTS nlp (ReferenceNumber text, Lemmation text, Stemming text,
+    CONSTRAINT ReferenceNumber PRIMARY KEY (ReferenceNumber))) ;
     """
     cursor.execute(query)
     return
