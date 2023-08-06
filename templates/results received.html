@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="/static/styles.css" type="text/css"/> 
+
+<center>
+  <h1> Cheshire West and Chester Planning Applications </h1>
+  <body>
+  <h2> Received Last Week </h2>  
+
+    <h3><a href={{ results['results'][0]['Link']}}> {{ results['results'][0]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][0]['Proposal']}}</p>
+    <p> Date Received: {{ results['results'][0]['DateReceived']}}</p>
+
+    <h3><a href={{ results['results'][1]['Link']}}> {{ results['results'][1]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][1]['Proposal']}}</p>
+    <p> Date Received: {{ results['results'][1]['DateReceived']}}</p>
+    
+    <h3><a href={{ results['results'][2]['Link']}}> {{ results['results'][2]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][2]['Proposal']}}</p>
+    <p> Date Received: {{ results['results'][2]['DateReceived']}}</p>
+    
+    <h3><a href={{ results['results'][3]['Link']}}> {{ results['results'][3]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][3]['Proposal']}}</p>
+    <p> Date Received: {{ results['results'][3]['DateReceived']}}</p>
+    
+    <h3><a href={{ results['results'][4]['Link']}}> {{ results['results'][4]['ReferenceNumber'] }} </a></h3>
+    <p> {{results['results'][4]['Proposal']}}</p>
+    <p> Date Received: {{ results['results'][4]['DateReceived']}}</p>
+    <br>
+    <var> offset </var> = 0
+    <p2>
+      <button type= "submit"> Next</button>
+      <a>
+        Next Page
+      </a>
+      href = "/results"
+    </p2>
+  </body>
+</center>

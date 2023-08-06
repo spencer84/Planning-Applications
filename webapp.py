@@ -29,16 +29,16 @@ def weekly_list(request: Request):
     """Return a list of weekly planning applications -- decided in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE DecisionDate >= '{last_week.strftime("%Y-%m-%d")}';""")
-    return templates.TemplateResponse("results.html", {"request": request, "results": results})
+    return templates.TemplateResponse("results decided.html", {"request": request, "results": results})
 
 
 
 @app.get("/received-last-week")
-def sub_weekly_list():
+def sub_weekly_list(request : Request):
     """Return a list of weekly planning applications -- received in the last week"""
     last_week = datetime.datetime.now() - datetime.timedelta(days=7)
     results = conn.queryJSON(f"""SELECT * FROM applications WHERE DateReceived >= '{last_week.strftime("%Y-%m-%d")}';""")
-    return results
+    return templates.TemplateResponse("results received.html", {"request": request, "results": results})
 
 @app.post("/near-me/")
 async def near_me(postcode: str = Form()):
