@@ -85,7 +85,7 @@ class PlanningApplication:
 
     def sendGeoData(self, connection):
         cur = connection.cursor()
-        cur.execute(f"""INSERT INTO geo (ReferenceNumber, Latitude, Longitude) values ('{self.reference}', 
+        cur.execute(f"""INSERT INTO geo (ReferenceNumber, Postcode, Latitude, Longitude) values ('{self.reference}','{self.postcode}', 
         '{self.latitude}', '{self.longitude}')
         ON DUPLICATE KEY UPDATE
         Latitude = '{self.latitude}',
