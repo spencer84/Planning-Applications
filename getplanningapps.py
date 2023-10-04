@@ -67,7 +67,7 @@ class ApplicationNavigator(SiteNavigator):
         """
         Search submitted applications by a given date range 
         """
-        nav.end_reached = False
+        self.end_reached = False
         try:
             WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(
                 (By.XPATH, "//*[@id=\"applicationReceivedStart\"]"))).send_keys(start_date)
