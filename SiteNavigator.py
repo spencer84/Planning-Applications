@@ -15,6 +15,16 @@ class SiteNavigator:
         self.search_results = []
         self.end_reached = False
 
+    def clean_text(string):
+        if "\'" in string:
+            split = string.split('\'')
+            string = "\\\'".join(split)
+            print(string)
+        if "\"" in string:
+            split = string.split('\"')
+            string = "\\\"".join(split)
+            print(string)
+
     def open_page(self):
         """
         Attempt to return to the given site using the webdriver object from Selenium
