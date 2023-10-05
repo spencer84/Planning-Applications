@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, HTTPException
 from starlette.responses import FileResponse, HTMLResponse 
 from dbconnect import dbconnect
 import datetime
@@ -66,3 +66,13 @@ async def search_ref(ref: str = Form()):
     if len(results['results']) == 0:
         return "No applications found matching this Reference Number"
     return results
+
+@app.post("/locate/")
+async def locate_application(ref):
+    """Return the coordinates for a given reference number"""
+    results = conn.queryJSON(f"""SELECT Latitude, Longitude FROM geo where ReferenceNumber = "{ref}" limit 1;""")
+    if len(results['results']) == 0:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return results
+
+
