@@ -42,6 +42,7 @@ def sub_weekly_list(request : Request):
 
 @app.post("/near-me/")
 async def near_me(postcode: str = Form()):
+    # To do: Verify input is valid UK postcode
     """Return a list of all postcodes near the inputed postcode"""
     results = requests.get(f"https://api.postcodes.io/postcodes/{postcode}/nearest")
     nearby = [x.get('postcode') for x in results.json()['result']]
